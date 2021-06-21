@@ -19,14 +19,17 @@ function showSuccess(input, message) {
 }
 
 // Check email is valid
-function isValidEmail(email) {
+function checkEmail(input) {
     const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    return regex.test(String(email).toLocaleLowerCase());
+    if (regex.test(input.value.trim())) {
+        showSuccess(input);
+    } else {
+        showError(input, "Email is not valid");
+    }
 }
 
-// Check required fields 
+// Check required fields
 function checkRequired(inputArr) {
-
     inputArr.forEach(function (input) {
         if (input.value.trim() === '') {
             showError(input, `${getFieldName(input)} is required`);
@@ -36,7 +39,7 @@ function checkRequired(inputArr) {
     });
 }
 
-// Get Fieldnam
+// Get Fieldname
 function getFieldName(input) {
     return input.id.charAt(0).toUpperCase() + input.id.slice(1);
 }
@@ -47,4 +50,7 @@ form.addEventListener('submit', function (e) {
     e.preventDefault();
 
     checkRequired([username, email, password, password2]);
+    checkLength(username, 3, 15);
+    checkLength(password, 6, 25);
+    checkEmail(email);
 });
