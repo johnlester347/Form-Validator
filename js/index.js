@@ -28,6 +28,34 @@ function checkEmail(input) {
     }
 }
 
+// Check input length
+function checkLength(input, min, max) {
+    if (input.value.length < min) {
+        showError(input, `${getFieldName(input)} must be atleast ${min} characters`);
+    } else if (input.value.length > max) {
+        showError(input, `${getFieldName(input)} must be less than ${max} characters`);
+    } else {
+        showSuccess(input);
+    }
+}
+
+function checkLengthPass2(input, min, max) {
+    if (input.value.length < min) {
+        showError(input, `Password must be atleast ${min} characters`);
+    } else if (input.value.length > max) {
+        showError(input, `Password must be less than ${max} characters`);
+    } else {
+        showSuccess(input);
+    }
+}
+
+// Check passwords match
+function checkPasswordsMatch(input1, input2) {
+    if (input1.value !== input2.value) {
+        showError(input2, 'Password do not match');
+    }
+}
+
 // Check required fields
 function checkRequired(inputArr) {
     inputArr.forEach(function (input) {
@@ -52,5 +80,7 @@ form.addEventListener('submit', function (e) {
     checkRequired([username, email, password, password2]);
     checkLength(username, 3, 15);
     checkLength(password, 6, 25);
+    checkLengthPass2(password2, 6, 25);
+    checkPasswordsMatch(password, password2);
     checkEmail(email);
 });
